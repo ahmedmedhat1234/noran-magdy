@@ -366,6 +366,247 @@
             font-weight: 800;
         }
 
+        /* ============ SURPRISE SECTION STYLES ============ */
+        .surprise-section {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.12) 0%, rgba(212, 175, 55, 0.12) 100%);
+            padding: 40px;
+            border-radius: 25px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(255, 105, 180, 0.25);
+            box-shadow: 
+                0 10px 30px rgba(255, 105, 180, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            display: none;
+        }
+
+        .surprise-title {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #d4af37, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .surprise-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .surprise-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #f0d78e 100%);
+            border: none;
+            padding: 30px;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 15px 40px rgba(212, 175, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .surprise-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .surprise-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 25px 60px rgba(212, 175, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        /* Messages Section */
+        .messages-section {
+            display: none;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .message-container {
+            background: linear-gradient(135deg, rgba(64, 224, 208, 0.15) 0%, rgba(255, 105, 180, 0.15) 100%);
+            padding: 40px;
+            border-radius: 25px;
+            border: 2px solid rgba(64, 224, 208, 0.3);
+            box-shadow: 
+                0 15px 40px rgba(64, 224, 208, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-content {
+            font-size: 1.4rem;
+            color: #e8e8f0;
+            line-height: 2;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            min-height: 50px;
+            white-space: pre-wrap;
+        }
+
+        /* Game Section */
+        .game-section {
+            display: none;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .game-button {
+            background: linear-gradient(135deg, #40e0d0 0%, #20b2aa 100%);
+            border: none;
+            padding: 20px 40px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 10px 30px rgba(64, 224, 208, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .game-button:hover {
+            transform: scale(1.05);
+        }
+
+        .game-message {
+            font-size: 1.2rem;
+            color: #ff69b4;
+            margin-top: 20px;
+            font-weight: 600;
+            min-height: 30px;
+        }
+
+        /* Image Section */
+        .image-section {
+            display: none;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .image-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(212, 175, 55, 0.2);
+            border: 3px solid rgba(212, 175, 55, 0.4);
+            animation: imageAppear 1s ease-out;
+        }
+
+        @keyframes imageAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Animated Stars Background */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 50%;
+            opacity: 0.6;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        }
+
+        /* Day 2 Message */
+        .day2-message {
+            display: none;
+            text-align: center;
+        }
+
+        .day2-content {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.15) 0%, rgba(212, 175, 55, 0.15) 100%);
+            padding: 50px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 
+                0 15px 40px rgba(255, 105, 180, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .day2-title {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #ff69b4, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .day2-text {
+            font-size: 1.3rem;
+            color: #d0d0e0;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .container {
@@ -404,6 +645,15 @@
 
             .final-message-text {
                 font-size: 1.2rem;
+            }
+
+            .surprise-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .image-container {
+                width: 250px;
+                height: 250px;
             }
         }
 
@@ -447,9 +697,21 @@
         .final-message {
             animation: fadeIn 0.9s ease-out 0.8s both;
         }
+
+        /* Treasure box open animation */
+        #treasureBox {
+            transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+            display: inline-block;
+        }
+
+        #treasureBox.opening {
+            transform: translateY(-8px) scale(1.05) rotate(-6deg);
+        }
     </style>
 </head>
 <body>
+    <div class="stars-container" id="starsContainer"></div>
+    
     <div class="container">
         <div class="content">
             <div class="header">
@@ -460,7 +722,7 @@
             <div class="profile-section">
                 <div class="profile-wrapper">
                     <div class="profile-glow"></div>
-                    <img src="noran.png" alt="نوران مجدي" class="profile-image">
+                    <img src="noran.png" alt="noran magdi" class="profile-image">
                 </div>
             </div>
 
@@ -491,14 +753,67 @@
                     و الويب ده تعبير عن حسن النيه ولو حاجه تخليكي مبسوطه لانك شكلك مضغوطة اليومين دول وانتي حد جميل يستاهل انه يكون مبسوط 💛
                 </p>
                 <p class="message-cta">
-                    ✨ اوعي تنسيييييي تفتحية يوم عيد ميلادك من الساعه 12   ✨
+                    ✨ افتحي الويب يوم عيد ميلادك ✨
                 </p>
+            </div>
+
+            <!-- SURPRISE SECTION - يظهر فقط بعد الساعة 12 -->
+            <div class="surprise-section" id="surpriseSection">
+                <div class="surprise-title">🎉 المفاجأة 🎉</div>
+                <div class="surprise-buttons">
+                    <button class="surprise-btn" id="day1Btn">اليوم الأول</button>
+                    <button class="surprise-btn" id="day2Btn">اليوم الثاني</button>
+                </div>
+            </div>
+
+            <!-- Messages Section -->
+            <div class="messages-section" id="messagesSection">
+                <div class="message-container">
+                    <div class="message-content" id="messageContent"></div>
+                </div>
+            </div>
+
+            <!-- Game Section (Puzzle) -->
+            <div class="game-section" id="gameSection">
+                <div class="game-title">حل اللغز عشان تكشفي المفاجأة</div>
+
+                <div id="puzzle">
+                    <p class="game-message" id="puzzleQuestion">لو احنا في فايت وانتي اتفنشتي وقدامي تلاته وانتي اتفنشتي انا هعمل اي ؟</p>
+                    <div class="puzzle-options" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;align-items:center;">
+                        <button class="surprise-btn option-btn" data-answer="recall">هسيبهم واروح اعمل ريكول</button>
+                        <button class="surprise-btn option-btn" data-answer="suicide">هموت نفسي</button>
+                        <button class="surprise-btn option-btn" data-answer="tactic">هلعب بتكتيك واقدر اجيبهم كلهم وبعدين اروح اذلك علشان اعمل ريكول</button>
+                    </div>
+                    <div class="game-message" id="puzzleFeedback" style="margin-top:12px;"></div>
+                </div>
+
+                <div id="treasureBox" style="display:none;margin-top:22px;cursor:pointer;">
+                    <div style="width:160px;height:120px;margin:0 auto;border-radius:16px;background:linear-gradient(135deg,#d4af37,#ff69b4);box-shadow:0 10px 30px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;font-weight:800;color:#1a1a2e;">صندوق المفاجأة</div>
+                    <div id="treasureHint" class="game-message" style="display:none;margin-top:10px;">اضغطي على الصندوق عشان تشوفي المفاجأة</div>
+                </div>
+            </div>
+
+            <!-- Image Section -->
+            <div class="image-section" id="imageSection">
+                <div class="image-container">
+                    <img src="noran2.jpeg" alt="نوران">
+                </div>
+                <div id="imageCaption" class="image-caption" style="display:none; text-align:center; margin-top:12px; font-weight:800; color:#ffdb70;"> </div>
+            </div>
+
+            <!-- Day 2 Message -->
+            <div class="day2-message" id="day2Message">
+                <div class="day2-content">
+                    <div class="day2-title">تعالي بكرا الساعة 12 🕐</div>
+                    <div class="day2-text">متستنيش... هناك مفاجأة مستنياكي!</div>
+                </div>
             </div>
 
             <div class="pubg-section">
                 <p class="pubg-title">best pubg player </p>
                 <p class="pubg-text">
-طبعا مفيش الكلام ده احنا الاتنين علي قدنا بس بجد عاش عليكي محترفه واللعب معاكي مش علشان انتي لعيبه او حاجه بس علشان روحك حلوة                 </p>
+                    طبعا مفيش الكلام ده احنا الاتنين علي قدنا بس بجد عاش عليكي محترفه واللعب معاكي مش علشان انتي لعيبه او حاجه بس علشان روحك حلوة
+                </p>
             </div>
 
             <div class="video-section">
@@ -519,6 +834,225 @@
     </div>
 
     <script>
+        // ==================== Configuration ====================
+        const SURPRISE_HOUR = 12; // 12 PM
+        const MESSAGES = [
+            "هنالك نوع من الاحترام يُسمّى احترام الألم\nوهو عدم ذكر النِعم أمام الشخص المحروم منها.",
+            "بس استني…",
+            "اقري اللي جاي على مهلك.",
+            "انتي مش الشخص المحروم من النِعم.",
+            "انتي النِعمة نفسها…",
+            "وجودك مريح،\nوضحكتك بتعدي،\nوإيجابيتك بتفرّق في حياة أي حد.",
+            "وده سبب كفاية يخلي أي حد يشكر الدنيا إنك فيها."
+        ];
+
+        const GAME_MESSAGES = [
+            "قريب شوية 😄",
+            "حاولي تاني!",
+            "هتقدري تمسكيني ؟؟",
+            "أنا هنا!",
+            "قريب جداً!"
+        ];
+
+        // ==================== State Management ====================
+        let currentMessageIndex = 0;
+        let gameAttempts = 0;
+        let gameButtonEscaped = false;
+        let audioPlaying = false;
+
+        // ==================== DOM Elements ====================
+        const surpriseSection = document.getElementById('surpriseSection');
+        const messagesSection = document.getElementById('messagesSection');
+        const gameSection = document.getElementById('gameSection');
+        const imageSection = document.getElementById('imageSection');
+        const day2Message = document.getElementById('day2Message');
+
+        const messageContent = document.getElementById('messageContent');
+        const puzzleQuestionEl = document.getElementById('puzzleQuestion');
+        const optionButtons = document.querySelectorAll('.option-btn');
+        const puzzleFeedback = document.getElementById('puzzleFeedback');
+        const treasureBox = document.getElementById('treasureBox');
+        const treasureHint = document.getElementById('treasureHint');
+        const gameMessage = document.getElementById('gameMessage');
+        const day1Btn = document.getElementById('day1Btn');
+        const day2Btn = document.getElementById('day2Btn');
+        const starsContainer = document.getElementById('starsContainer');
+
+        // ==================== Time Check ====================
+        function checkTime() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            return currentHour >= SURPRISE_HOUR;
+        }
+
+        // ==================== Initialize Page ====================
+        function initializePage() {
+            if (checkTime()) {
+                // After 12 PM - Show surprise section
+                surpriseSection.style.display = 'block';
+                setupEventListeners();
+            }
+        }
+
+        // ==================== Typing Effect ====================
+        function typeMessage(text, element, speed = 50) {
+            return new Promise((resolve) => {
+                element.textContent = '';
+                let index = 0;
+
+                function type() {
+                    if (index < text.length) {
+                        element.textContent += text[index];
+                        index++;
+                        setTimeout(type, speed);
+                    } else {
+                        resolve();
+                    }
+                }
+
+                type();
+            });
+        }
+
+        // ==================== Audio Setup ====================
+        function playBackgroundMusic() {
+            if (audioPlaying) return;
+            
+            const audio = new Audio('10.mp3');
+            audio.volume = 0.3;
+            audio.loop = true;
+            audio.play().catch(err => console.log('Audio play failed:', err));
+            audioPlaying = true;
+        }
+
+        // ==================== Message Sequence ====================
+        async function showMessageSequence() {
+            messagesSection.style.display = 'block';
+            surpriseSection.style.display = 'none';
+            playBackgroundMusic();
+
+            for (let i = 0; i < MESSAGES.length; i++) {
+                currentMessageIndex = i;
+                await typeMessage(MESSAGES[i], messageContent, 80);
+                
+                if (i < MESSAGES.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                }
+            }
+
+            // After messages, show game
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            messagesSection.style.display = 'none';
+            gameSection.style.display = 'block';
+        }
+
+        // ==================== Game Logic ====================
+        function setupGameButton() {
+            // Puzzle option buttons handler
+            if (optionButtons && optionButtons.length) {
+                optionButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const ans = btn.dataset.answer || '';
+                        if (ans === 'tactic') {
+                            puzzleFeedback.textContent = 'صح! افتحي الصندوق علشان تشوفي المفاجأة 🎉';
+                            treasureBox.style.display = 'block';
+                            treasureHint.style.display = 'block';
+                        } else {
+                            puzzleFeedback.textContent = 'حلوة بس مش دي، جرّبي تاني';
+                        }
+                    });
+                });
+            }
+
+            // Allow opening the treasure box when visible
+            if (treasureBox) {
+                treasureBox.addEventListener('click', () => {
+                    treasureBox.classList.add('opening');
+                    setTimeout(() => {
+                        // reveal image and caption
+                        startStarAnimation();
+                        const caption = document.getElementById('imageCaption');
+                        if (caption) {
+                            caption.textContent = 'اشطر بوته في البوتات';
+                            caption.style.display = 'block';
+                        }
+                        gameSection.style.display = 'none';
+                    }, 700);
+                });
+            }
+        }
+
+        // ==================== Star Animation ====================
+        function createStars() {
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function startStarAnimation() {
+            createStars();
+            imageSection.style.display = 'block';
+            animateStars();
+        }
+
+        function animateStars() {
+            const stars = document.querySelectorAll('.star');
+            const imageContainer = document.querySelector('.image-container');
+            
+            if (!imageContainer) return;
+
+            const imageRect = imageContainer.getBoundingClientRect();
+            const imageCenterX = imageRect.left + imageRect.width / 2;
+            const imageCenterY = imageRect.top + imageRect.height / 2;
+
+            stars.forEach((star, index) => {
+                const startX = parseFloat(star.style.left);
+                const startY = parseFloat(star.style.top);
+                
+                let currentX = startX;
+                let currentY = startY;
+                let frame = 0;
+                const totalFrames = 120;
+
+                function moveToImage() {
+                    if (frame < totalFrames) {
+                        const progress = frame / totalFrames;
+                        currentX = startX + (imageCenterX / window.innerWidth * 100 - startX) * progress;
+                        currentY = startY + (imageCenterY / window.innerHeight * 100 - startY) * progress;
+                        
+                        star.style.left = currentX + '%';
+                        star.style.top = currentY + '%';
+                        star.style.opacity = 1 - progress * 0.5;
+                        
+                        frame++;
+                        requestAnimationFrame(moveToImage);
+                    } else {
+                        star.style.opacity = 0;
+                    }
+                }
+
+                setTimeout(moveToImage, index * 30);
+            });
+        }
+
+        // ==================== Event Listeners ====================
+        function setupEventListeners() {
+            day1Btn.addEventListener('click', showMessageSequence);
+            day2Btn.addEventListener('click', showDay2Message);
+            setupGameButton();
+        }
+
+        function showDay2Message() {
+            surpriseSection.style.display = 'none';
+            day2Message.style.display = 'block';
+        }
+
+        // ==================== Original Countdown ====================
         function updateCountdown() {
             // تاريخ عيد الميلاد: 25 ديسمبر 2025
             const birthdayDate = new Date(2025, 11, 25, 0, 0, 0).getTime();
@@ -543,8 +1077,10 @@
             }
         }
 
+        // ==================== Initialize ====================
         updateCountdown();
         setInterval(updateCountdown, 1000);
+        window.addEventListener('load', initializePage);
     </script>
 </body>
 </html>
