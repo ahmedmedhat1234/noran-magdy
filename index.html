@@ -564,12 +564,43 @@
 
         .star {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #d4af37;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #00d9ff 0%, #ff1493 100%);
             border-radius: 50%;
-            opacity: 0.6;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            opacity: 0.9;
+            box-shadow: 
+                0 0 15px rgba(0, 217, 255, 0.8),
+                0 0 30px rgba(255, 20, 147, 0.6),
+                0 0 45px rgba(0, 217, 255, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+            filter: blur(0.5px);
+        }
+
+        /* Mouse trail neon effect */
+        .mouse-trail {
+            position: fixed;
+            pointer-events: none;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d9ff 0%, #ff1493 40%, #ff0000 100%);
+            box-shadow: 
+                0 0 10px rgba(0, 217, 255, 0.9),
+                0 0 20px rgba(255, 20, 147, 0.8),
+                0 0 30px rgba(255, 0, 0, 0.6);
+            opacity: 0.9;
+            z-index: 9999;
+            animation: fadeOut 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 0.9;
+            }
+            to {
+                opacity: 0;
+            }
         }
 
         /* Day 2 Message */
@@ -707,6 +738,25 @@
         #treasureBox.opening {
             transform: translateY(-8px) scale(1.05) rotate(-6deg);
         }
+
+        /* Image modal (zoom) */
+        #imageModal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 10000;
+        }
+
+        #imageModal img {
+            max-width: 92%;
+            max-height: 92%;
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            cursor: zoom-out;
+        }
     </style>
 </head>
 <body>
@@ -778,34 +828,47 @@
                 <div class="game-title">حل اللغز عشان تكشفي المفاجأة</div>
 
                 <div id="puzzle">
-                    <p class="game-message" id="puzzleQuestion">لو احنا في فايت وانتي اتفنشتي وقدامي تلاته وانتي اتفنشتي انا هعمل اي ؟</p>
+                    <p class="game-message" id="puzzleQuestion">اي اكتر جملة بقولها بعد ما نخلص مدينه ؟</p>
                     <div class="puzzle-options" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;align-items:center;">
-                        <button class="surprise-btn option-btn" data-answer="recall">هسيبهم واروح اعمل ريكول</button>
-                        <button class="surprise-btn option-btn" data-answer="suicide">هموت نفسي</button>
-                        <button class="surprise-btn option-btn" data-answer="tactic">هلعب بتكتيك واقدر اجيبهم كلهم وبعدين اروح اذلك علشان اعمل ريكول</button>
+                        <button class="surprise-btn option-btn" data-answer="wrong1">تعالي اوريكي حركه</button>
+                        <button class="surprise-btn option-btn" data-answer="wrong2">يلا ندخل زوون</button>
+                        <button class="surprise-btn option-btn" data-answer="tactic">عماير اسكول بتاديني</button>
                     </div>
                     <div class="game-message" id="puzzleFeedback" style="margin-top:12px;"></div>
                 </div>
 
                 <div id="treasureBox" style="display:none;margin-top:22px;cursor:pointer;">
                     <div style="width:160px;height:120px;margin:0 auto;border-radius:16px;background:linear-gradient(135deg,#d4af37,#ff69b4);box-shadow:0 10px 30px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;font-weight:800;color:#1a1a2e;">صندوق المفاجأة</div>
-                    <div id="treasureHint" class="game-message" style="display:none;margin-top:10px;">اضغطي على الصندوق عشان تشوفي المفاجأة</div>
+                    <div id="treasureHint" class="game-message" style="display:none;margin-top:10px;"></div>
                 </div>
             </div>
 
             <!-- Image Section -->
             <div class="image-section" id="imageSection">
-                <div class="image-container">
-                    <img src="noran2.jpeg" alt="نوران">
+                    <div class="image-container">
+                        <img id="statsImg" src="1.jpg" alt="PUBG Stats Image" width="1599" height="838" style="width:1599px;height:838px;object-fit:cover;max-width:100%;">
+                    </div>
+                    <div id="imageCaption" class="image-caption" style="display:none; text-align:center; margin-top:12px; font-weight:800; color:#ffdb70;">اظن باين مين فينا ليه فضل علي التاني</div>
+                    <button id="continueBtn" class="surprise-btn" style="display:none;margin:20px auto;max-width:250px;" onclick="showPuzzle()">يلا نكمل</button>
+
+                <!-- Image Modal for zoom -->
+                <div id="imageModal" aria-hidden="true">
+                    <img id="modalImg" src="" alt="Zoomed image">
                 </div>
-                <div id="imageCaption" class="image-caption" style="display:none; text-align:center; margin-top:12px; font-weight:800; color:#ffdb70;"> </div>
+            </div>
+
+            <!-- Long Caption and Story (outside image section so they don't disappear) -->
+            <p id="longCaption" class="message-text" style="display:none; margin-top: 20px; color: #d0d0e0; font-size: 1.1rem; line-height: 1.8;"></p>
+            <div id="storyContainer" style="display:none; margin-top: 30px; padding: 20px; border-radius: 15px; background: rgba(255, 105, 180, 0.1); border: 1px solid rgba(255, 105, 180, 0.3);">
+                <p id="storyText" class="message-text" style="color: #e8e8f0; font-size: 1.2rem; line-height: 2.2; text-align: justify;"></p>
             </div>
 
             <!-- Day 2 Message -->
             <div class="day2-message" id="day2Message">
                 <div class="day2-content">
-                    <div class="day2-title">تعالي بكرا الساعة 12 🕐</div>
-                    <div class="day2-text">متستنيش... هناك مفاجأة مستنياكي!</div>
+                    <div class="day2-title" id="day2Title">تعالي بكرا الساعة 12 🕐</div>
+                    <div class="day2-text" id="day2Text">متستنيش... هناك مفاجأة مستنياكي!</div>
+                    <p class="day2-text" id="songMessage" style="display:none; margin-top: 20px;"></p>
                 </div>
             </div>
 
@@ -834,6 +897,27 @@
     </div>
 
     <script>
+        // ==================== Configuration ====================
+        const LONG_CAPTION_TEXT = `اكيد انتي فعلا شخص متغير علي السنه اللي فاتت بس خليكي ديما فاكرة انك حد كويس وجميل وانك تستاهلي يتحاول معاكي مره ومرتين والف لانك حد طيب وشخصيه جميلة وان كل حد سابك او تخلي عنك في وقت ما هيجيله الوقت اللي هيكتشفوا فيه ازاي ضيعوا الجوهرة دي من ايدهم وبعديها فكك بقي من النكد والقرف ده واقري الجزء الجي بعناية لان ده جزء من الرواية بتاعتي`;
+
+        const LONG_STORY_TEXT = `أنا مش فاكر إمتى بالظبط، التاريخ بيختلط في دماغي، والزمن بقى مجرد خطوط باهتة.
+بس فيه لحظة معينة، لحظة محفورة في ذاكرتي زي الوشم، بدأت أحس إنك... مش هنا.
+مش هنا بقلبك، مش هنا بروحك، مش هنا بوجودك.
+مفيش خناقة صريحة، مفيش كلمة تقيلة اتقالت، ولا حتى نظرة مضايقة.
+
+بس في حاجة اتغيرت، حاجة صغيرة أوي، زي شعرة بتتقطع، بس وجعت أوي، وجعت لدرجة إنها سابت أثر مش بيروح .
+الكلام قل، الضحك قل، والضحكة اللي كانت بتنور الدنيا، بقت مجرد رسمة باهتة على الشفايف.
+واللهفة اللي كانت في أول المكالمة، اللي كانت بتخلي قلبي يرقص من الفرحة، بقت مش موجودة، كأنها ما كانتش موجودة أصلاً .
+بقيت أنا اللي أبدأ، أنا اللي بمد إيدي، أنا اللي بحاول أكسر حاجز الصمت.
+وأنا اللي أختم، أنا اللي بلملم بواقي المحادثة، أنا اللي بقفل الباب.
+وأنا اللي أرجع أقرا الكلام، أحلل كل كلمة، كل حرف، أقول يمكن كانت تعبانة، يمكن كانت مشغولة، يمكن كان عندها ظروف.
+بس حتى التعب، كان زمان له طعم تاني، كان زمان بيخليكي تقربي أكتر، مش تبعدي.
+زمان كنت بحس بيكي من أول "ألو"، من أول نبرة صوتك، كنت بحس بكل اللي جواكي.
+دلوقتي؟ كنت بكلمك، وماحسّتش إنك مستنياني، ماحسّتش إن صوتي بيوصل لقلبك. كأنك بتردي علشان ما تبينيش إنك بتتجاهلي، كأنك بتأدي واجب، بس قلبك مش هنا، روحك مش هنا .
+وأكتر لحظة كسرتني، لحظة سابت أثر لا يمحى، لما استنيت، وما جيتيش.
+مش أول مرة تتأخري، لأ، التأخير كان عادي، كنت بتعود عليه.
+بس دي أول مرة، أول مرة ما استناكيش فيها بنفس اللهفة، بنفس الشوق`;
+
         // ==================== Configuration ====================
         // Show surprise immediately during testing/run (set to 12 for noon)
         const SURPRISE_HOUR = 0; // 0 means show immediately
@@ -866,7 +950,11 @@
         const messagesSection = document.getElementById('messagesSection');
         const gameSection = document.getElementById('gameSection');
         const imageSection = document.getElementById('imageSection');
-        const day2Message = document.getElementById('day2Message');
+       const day2Message = document.querySelector('.day2-message');
+        const day2Title = document.getElementById('day2Title');
+        const day2Text = document.getElementById('day2Text');
+        const songMessage = document.getElementById('songMessage');
+        const songAudio = document.getElementById('songAudio');
 
         const messageContent = document.getElementById('messageContent');
         const puzzleQuestionEl = document.getElementById('puzzleQuestion');
@@ -878,6 +966,9 @@
         const day1Btn = document.getElementById('day1Btn');
         const day2Btn = document.getElementById('day2Btn');
         const starsContainer = document.getElementById('starsContainer');
+        const longCaption = document.getElementById('longCaption');
+        const storyContainer = document.getElementById('storyContainer');
+        const storyText = document.getElementById('storyText');
 
         // ==================== Time Check ====================
         function checkTime() {
@@ -898,6 +989,13 @@
         // ==================== Typing Effect ====================
         function typeMessage(text, element, speed = 50) {
             return new Promise((resolve) => {
+                // If speed <= 0, render instantly
+                if (speed <= 0) {
+                    element.textContent = text;
+                    resolve();
+                    return;
+                }
+
                 element.textContent = '';
                 let index = 0;
 
@@ -919,7 +1017,7 @@
         function playBackgroundMusic() {
             if (audioPlaying) return;
             
-            const audio = new Audio('10.mp3');
+            const audio = new Audio('11.mp3');
             audio.volume = 0.3;
             audio.loop = true;
             audio.play().catch(err => console.log('Audio play failed:', err));
@@ -949,15 +1047,37 @@
 
         // ==================== Game Logic ====================
         function setupGameButton() {
-            // Puzzle option buttons handler
+            // Puzzle option buttons handler — on correct answer, type remaining text
             if (optionButtons && optionButtons.length) {
                 optionButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
+                    btn.addEventListener('click', async () => {
                         const ans = btn.dataset.answer || '';
                         if (ans === 'tactic') {
-                            puzzleFeedback.textContent = 'صح! افتحي الصندوق علشان تشوفي المفاجأة 🎉';
-                            treasureBox.style.display = 'block';
-                            treasureHint.style.display = 'block';
+                            puzzleFeedback.textContent = 'صح! 🎉';
+
+                            // hide puzzle and options
+                            const puzzleEl = document.getElementById('puzzle');
+                            if (puzzleEl) puzzleEl.style.display = 'none';
+
+                            // Disable all buttons to prevent multiple clicks
+                            optionButtons.forEach(b => b.disabled = true);
+
+                            // small pause then show long caption and type it character-by-character
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                            if (longCaption) {
+                                longCaption.style.display = 'block';
+                                await typeMessage(LONG_CAPTION_TEXT, longCaption, 50);
+                            }
+
+                            // brief pause then show story and type
+                            await new Promise(resolve => setTimeout(resolve, 700));
+                            if (storyContainer) {
+                                storyContainer.style.display = 'block';
+                                await typeMessage(LONG_STORY_TEXT, storyText, 50);
+                            }
+
+                            // emphasize reveal
+                            startStarAnimation();
                         } else {
                             puzzleFeedback.textContent = 'حلوة بس مش دي، جرّبي تاني';
                         }
@@ -969,21 +1089,30 @@
             if (treasureBox) {
                 treasureBox.addEventListener('click', () => {
                     treasureBox.classList.add('opening');
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         // reveal image and caption
                         startStarAnimation();
+                        gameSection.style.display = 'none';
+                        
+                        // 1. Show the long caption
+                        longCaption.style.display = 'block';
+                        await typeMessage(LONG_CAPTION_TEXT, longCaption, 50);
+
+                        // 2. Show the story container and type the story
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        storyContainer.style.display = 'block';
+                        await typeMessage(LONG_STORY_TEXT, storyText, 50);
+
+                        // 3. Show the image caption (PUBG stats message)
                         const caption = document.getElementById('imageCaption');
                         if (caption) {
-                            caption.textContent = 'اشطر بوته في البوتات';
                             caption.style.display = 'block';
                         }
-                        gameSection.style.display = 'none';
                     }, 700);
                 });
             }
         }
 
-        // ==================== Star Animation ====================
         function createStars() {
             starsContainer.innerHTML = '';
             for (let i = 0; i < 50; i++) {
@@ -1041,21 +1170,89 @@
             });
         }
 
-        // ==================== Event Listeners ====================
         function setupEventListeners() {
             day1Btn.addEventListener('click', showMessageSequence);
-            day2Btn.addEventListener('click', showDay2Message);
+            day2Btn.addEventListener('click', (e) => {
+                // Start audio immediately on user gesture to satisfy autoplay policies
+                const audioEl = document.getElementById('songAudio');
+                if (audioEl) {
+                    audioEl.loop = true;
+                    audioEl.volume = 0.45;
+                    try { audioEl.currentTime = 0; } catch (err) {}
+                    audioEl.play().catch(err => console.log('Audio play failed on user gesture:', err));
+                }
+
+                // Then run the usual flow
+                showDay2Message();
+            });
+
             setupGameButton();
+
+            // (continueBtn removed) puzzle will appear automatically after image is shown
+
+            // Image zoom handlers (modal)
+            const statsImg = document.querySelector('.image-container img');
+            const imageModal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            if (statsImg && imageModal && modalImg) {
+                statsImg.style.cursor = 'zoom-in';
+                statsImg.addEventListener('click', () => {
+                    modalImg.src = statsImg.src;
+                    imageModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+
+                imageModal.addEventListener('click', () => {
+                    imageModal.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
         }
 
-        function showDay2Message() {
+        async function showDay2Message() {
+            // 1. Hide surprise section and show day 2 message
             surpriseSection.style.display = 'none';
             day2Message.style.display = 'block';
+
+            // 2. Clear the title and set the new text for the main message
+            day2Title.style.display = 'none'; // Hide the old title
+            day2Text.textContent = ''; // Clear the old text
+
+            const newText = "الساعه جت 12 و i care جدا";
+            const songIntro = "اغنية انهارده هي اغنية انا شخصيا بحبها اتمني تعجبك انتي كمان";
+
+            // 2. Type the day2 text and song intro (typing effect)
+            await typeMessage(newText, day2Text, 80);
+
+            // small pause then show the song intro and type it
+            await new Promise(resolve => setTimeout(resolve, 500));
+            songMessage.style.display = 'block';
+            await typeMessage(songIntro, songMessage, 80);
+
+            // 3. Play the audio file (configure to loop and start from beginning)
+            if (songAudio) {
+                songAudio.loop = true;
+                songAudio.volume = 0.45;
+                try { songAudio.currentTime = 0; } catch(e) {}
+                songAudio.play().catch(err => console.log('Audio play failed:', err));
+            } else {
+                console.log('songAudio element not found');
+            }
+
+            // 4. Show the stats image and caption first (puzzle shows after "يلا نكمل")
+            if (imageSection) {
+                imageSection.style.display = 'block';
+                const caption = document.getElementById('imageCaption');
+                if (caption) caption.style.display = 'block';
+                const continueBtn = document.getElementById('continueBtn');
+                if (continueBtn) continueBtn.style.display = 'block';
+            }
+
+            // 5. Hide the day2 message and wait for user to press continue
+            day2Message.style.display = 'none';
         }
 
-        // ==================== Original Countdown ====================
         function updateCountdown() {
-            // تاريخ عيد الميلاد: 25 ديسمبر 2025
             const birthdayDate = new Date(2025, 11, 25, 0, 0, 0).getTime();
             const now = new Date().getTime();
             const timeRemaining = birthdayDate - now;
@@ -1078,10 +1275,39 @@
             }
         }
 
-        // ==================== Initialize ====================
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Function to show puzzle when button is clicked
+        function showPuzzle() {
+            const continueBtn = document.getElementById('continueBtn');
+            const imageSection = document.getElementById('imageSection');
+            const gameSection = document.getElementById('gameSection');
+            if (continueBtn) continueBtn.style.display = 'none';
+            if (imageSection) imageSection.style.display = 'none';
+            if (gameSection) gameSection.style.display = 'block';
+        }
+
+        // Mouse trail effect - continuous line
+        let lastTrailTime = 0;
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            // Create trail particle every 20ms for continuous line
+            if (now - lastTrailTime > 20) {
+                const trail = document.createElement('div');
+                trail.className = 'mouse-trail';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+                lastTrailTime = now;
+
+                // Remove particle after animation
+                setTimeout(() => trail.remove(), 400);
+            }
+        });
+
         window.addEventListener('load', initializePage);
     </script>
+    <audio id="songAudio" src="11.mp3" preload="auto"></audio>
 </body>
 </html>
