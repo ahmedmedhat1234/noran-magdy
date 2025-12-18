@@ -813,6 +813,7 @@
                 <div class="surprise-buttons">
                     <button class="surprise-btn" id="day1Btn">اليوم الأول</button>
                     <button class="surprise-btn" id="day2Btn">اليوم الثاني</button>
+                    <button class="surprise-btn" id="day3Btn">اليوم التالت</button>
                 </div>
             </div>
 
@@ -871,6 +872,30 @@
                     <p class="day2-text" id="songMessage" style="display:none; margin-top: 20px;"></p>
                 </div>
             </div>
+
+            <!-- Day 3 Message and Game Section (New) -->
+            <div class="day3-section" id="day3Section" style="display:none;">
+                <div class="message">
+                    <p class="message-text" id="day3Text1"></p>
+                    <p class="message-text" id="day3Text2" style="margin-top: 15px;"></p>
+                    <div class="audio-controls" id="audioControls" style="display: none; justify-content: center; align-items: center; gap: 15px; margin-top: 20px;">
+                        <button onclick="toggleAudio()" class="surprise-btn" style="padding: 10px 20px; font-size: 1rem;">إيقاف/تشغيل الموسيقى</button>
+                    </div>
+                </div>
+                <div class="game-section" id="sudokuGameSection" style="display: none;">
+                    <h2 class="game-title">لعبة السودوكو</h2>
+                    <p class="message-text" style="font-size: 1rem; color: #aaa;">املأي الأرقام من 1 إلى 9 في كل صف وعمود ومربع 3x3.</p>
+                    <div id="sudoku-board" style="display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); width: 100%; max-width: 450px; margin: 20px auto; border: 4px solid #d4af37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);"></div>
+                    <p id="sudoku-status" class="message-text" style="color: #ff69b4; display: none;"></p>
+                    <button class="surprise-btn" id="finishButton" onclick="checkSudoku()" style="display: none; padding: 15px 30px; margin-top: 20px; font-size: 1.2rem;">خلصت</button>
+                </div>
+                <div class="rating-section" id="ratingSection" style="display: none; text-align: center; margin-top: 30px;">
+                    <h2 class="game-title" id="ratingTitle"></h2>
+                    <div class="rating-stars" id="ratingStars" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;"></div>
+                    <p class="celebration-message" id="celebrationMessage" style="margin-top: 30px; font-size: 1.5rem; color: #ff69b4; font-weight: 700; line-height: 1.8; display: none;"></p>
+                </div>
+            </div>
+            <div class="confetti" id="confetti-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 99; display: none;"></div>
 
             <div class="pubg-section">
                 <p class="pubg-title">best pubg player </p>
@@ -1307,7 +1332,217 @@
         });
 
         window.addEventListener('load', initializePage);
+
+        // ==================== DAY 3 LOGIC ====================
+        // Sudoku Data
+        const initialBoard = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        ];
+        const solvedBoard = [
+            [5, 3, 4, 6, 7, 8, 9, 1, 2],
+            [6, 7, 2, 1, 9, 5, 3, 4, 8],
+            [1, 9, 8, 3, 4, 2, 5, 6, 7],
+            [8, 5, 9, 7, 6, 1, 4, 2, 3],
+            [4, 2, 6, 8, 5, 3, 7, 9, 1],
+            [7, 1, 3, 9, 2, 4, 8, 5, 6],
+            [9, 6, 1, 5, 3, 7, 2, 8, 4],
+            [2, 8, 7, 4, 1, 9, 6, 3, 5],
+            [3, 4, 5, 2, 8, 6, 1, 7, 9]
+        ];
+
+        const day3Audio = document.getElementById('songAudio12');
+        let day3Playing = false;
+
+        function toggleAudio() {
+            if (day3Playing) {
+                day3Audio.pause();
+                day3Playing = false;
+            } else {
+                day3Audio.play().catch(err => console.log('Audio play failed:', err));
+                day3Playing = true;
+            }
+        }
+
+        async function showDay3Surprise() {
+            const day3Section = document.getElementById('day3Section');
+            const audioControls = document.getElementById('audioControls');
+            const sudokuGameSection = document.getElementById('sudokuGameSection');
+            const day3Text1 = document.getElementById('day3Text1');
+            const day3Text2 = document.getElementById('day3Text2');
+
+            surpriseSection.style.display = 'none';
+            day3Section.style.display = 'block';
+            
+            if (day3Audio) {
+                day3Audio.loop = true;
+                day3Audio.volume = 0.5;
+                day3Audio.currentTime = 0;
+                day3Audio.play().catch(err => console.log('Audio play failed:', err));
+                day3Playing = true;
+                audioControls.style.display = 'flex';
+            }
+
+            const msg1 = "اهلا وسهلا";
+            await typeMessage(msg1, day3Text1, 80);
+            
+            const msg2 = "انا هحاول اعمل حاجه ويارب تظبط وهي حاجه انتي بتحبيها";
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await typeMessage(msg2, day3Text2, 80);
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            sudokuGameSection.style.display = 'block';
+            generateSudokuBoard();
+        }
+
+        function generateSudokuBoard() {
+            const boardElement = document.getElementById('sudoku-board');
+            boardElement.innerHTML = '';
+
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const cellValue = initialBoard[r][c];
+                    const cell = document.createElement('div');
+                    cell.style.cssText = 'width: 100%; padding-bottom: 100%; position: relative; border: 1px solid rgba(255, 255, 255, 0.1); background-color: rgba(255, 255, 255, 0.05);';
+                    
+                    if ((r + 1) % 3 === 0 && r !== 8) cell.style.borderBottom = '3px solid #d4af37';
+                    if ((c + 1) % 3 === 0 && c !== 8) cell.style.borderRight = '3px solid #d4af37';
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.dataset.row = r;
+                    input.dataset.col = c;
+                    input.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-align: center; font-size: 1.5rem; font-weight: 700; color: #40e0d0; background: transparent; border: none; outline: none; caret-color: #d4af37;';
+                    input.oninput = (e) => {
+                        e.target.value = e.target.value.replace(/[^1-9]/g, '');
+                        document.getElementById('sudoku-status').style.display = 'none';
+                    };
+
+                    if (cellValue !== 0) {
+                        input.value = cellValue;
+                        input.readOnly = true;
+                        input.style.color = '#d4af37';
+                        input.style.fontWeight = '800';
+                        input.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+                        input.style.cursor = 'default';
+                    }
+                    
+                    cell.appendChild(input);
+                    boardElement.appendChild(cell);
+                }
+            }
+            document.getElementById('finishButton').style.display = 'inline-block';
+        }
+
+        function checkSudoku() {
+            const boardElement = document.getElementById('sudoku-board');
+            const inputs = boardElement.querySelectorAll('input');
+            const currentBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+            let isComplete = true;
+
+            inputs.forEach(input => {
+                const r = parseInt(input.dataset.row);
+                const c = parseInt(input.dataset.col);
+                const val = parseInt(input.value) || 0;
+                currentBoard[r][c] = val;
+                if (val === 0) {
+                    isComplete = false;
+                }
+            });
+
+            const statusElement = document.getElementById('sudoku-status');
+            statusElement.style.display = 'block';
+
+            if (!isComplete) {
+                statusElement.textContent = '  يستي كملي .';
+                return;
+            }
+
+            let isCorrect = true;
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (currentBoard[r][c] !== solvedBoard[r][c]) {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+                if (!isCorrect) break;
+            }
+
+            if (isCorrect) {
+                statusElement.textContent = 'أشطر عسلية في الدنيا كلها ';
+                document.getElementById('finishButton').style.display = 'none';
+                setTimeout(showRatingSection, 1500);
+            } else {
+                statusElement.textContent = 'لا غلط جربي تكملي ';
+            }
+        }
+
+        function showRatingSection() {
+            if (day3Audio && !day3Audio.paused) {
+                day3Audio.pause();
+            }
+
+            const sudokuGameSection = document.getElementById('sudokuGameSection');
+            const ratingSection = document.getElementById('ratingSection');
+            const ratingTitle = document.getElementById('ratingTitle');
+            const ratingStarsContainer = document.getElementById('ratingStars');
+
+            sudokuGameSection.style.display = 'none';
+            ratingSection.style.display = 'block';
+            ratingTitle.textContent = 'قيمي نفسك';
+            ratingStarsContainer.innerHTML = '';
+
+            for (let i = 1; i <= 7; i++) {
+                const star = document.createElement('span');
+                star.innerHTML = '★';
+                star.dataset.value = i;
+                star.style.cssText = 'font-size: 3rem; color: #444; cursor: pointer; transition: color 0.2s ease, transform 0.2s ease;';
+                star.onmouseover = () => { star.style.color = '#ff69b4'; star.style.transform = 'scale(1.1)'; };
+                star.onmouseout = () => { if (!star.classList.contains('rated')) star.style.color = '#444'; star.style.transform = 'scale(1)'; };
+                star.onclick = () => handleRating(i);
+                ratingStarsContainer.appendChild(star);
+            }
+        }
+
+        function handleRating(rating) {
+            const stars = document.querySelectorAll('#ratingStars span');
+            stars.forEach(star => {
+                const starValue = parseInt(star.dataset.value);
+                if (starValue <= rating) {
+                    star.classList.add('rated');
+                    star.style.color = '#d4af37';
+                } else {
+                    star.classList.remove('rated');
+                    star.style.color = '#444';
+                }
+                star.onclick = null;
+            });
+
+            const messageElement = document.getElementById('celebrationMessage');
+            messageElement.textContent = "معلش بقي مش هعرف احط نجوم الكون هنا كلها علشان انتي تقييمك اعلي اصلا من كل نجوم الكون وانا في الجيم موتت نفسي قاصد علشان الحق اخلص قبل 12 وانتي اشطر نيرو في العسليات كلهم";
+            messageElement.style.display = 'block';
+            
+            document.getElementById('confetti-container').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('confetti-container').style.display = 'none';
+            }, 8000);
+        }
+
+        const day3Btn = document.getElementById('day3Btn');
+        if (day3Btn) {
+            day3Btn.addEventListener('click', showDay3Surprise);
+        }
     </script>
     <audio id="songAudio" src="11.mp3" preload="auto"></audio>
+    <audio id="songAudio12" src="12.mp3" preload="auto"></audio>
 </body>
 </html>
