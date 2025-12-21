@@ -809,6 +809,112 @@
             }
         }
 
+        /* Day 5 Specialized Styles */
+        .escape-btn {
+            position: absolute;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .coffee-animation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: rgba(43, 29, 14, 0.2);
+            border-radius: 30px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .cafe-scene {
+            display: flex;
+            align-items: flex-end;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .person-icon {
+            font-size: 4rem;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
+            animation: moveHead 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveHead {
+            from {
+                transform: rotate(-5deg);
+            }
+
+            to {
+                transform: rotate(5deg);
+            }
+        }
+
+        .coffee-steam-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .steam {
+            position: absolute;
+            bottom: 40px;
+            width: 4px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 2px;
+            filter: blur(2px);
+            animation: steamRise 2s infinite ease-out;
+            opacity: 0;
+        }
+
+        .steam:nth-child(1) {
+            left: 40px;
+            animation-delay: 0s;
+        }
+
+        .steam:nth-child(2) {
+            left: 50px;
+            animation-delay: 0.5s;
+        }
+
+        .steam:nth-child(3) {
+            left: 60px;
+            animation-delay: 1s;
+        }
+
+        @keyframes steamRise {
+            0% {
+                transform: translateY(0) scaleX(1);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(-30px) scaleX(1.5);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-60px) scaleX(2);
+                opacity: 0;
+            }
+        }
+
+        .cup-icon {
+            font-size: 3rem;
+        }
+
+        /* Day 3 Section */
+        .day3-section {
+            display: none;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
         /* Day 2 Message */
         .day2-message {
             display: none;
@@ -1035,6 +1141,8 @@
                     <button class="surprise-btn" id="day2Btn">اليوم الثاني</button>
                     <button class="surprise-btn" id="day3Btn">اليوم التالت</button>
                     <button class="surprise-btn" id="day4Btn">اليوم الرابع</button>
+                    <button class="surprise-btn" id="day5Btn">اليوم الخامس</button>
+                    <button class="surprise-btn" id="day6Btn">اليوم السادس</button>
                 </div>
             </div>
 
@@ -1183,8 +1291,72 @@
             </div>
         </div>
 
-        <div class="confetti" id="confetti-container"
-            style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 99; display: none;">
+        <!-- Day 5 Section -->
+        <div class="day3-section" id="day5Section" style="display:none;">
+            <div class="message">
+                <div id="day5TextContainer" style="min-height: 200px;">
+                    <p class="message-text" id="day5Text" style="font-size: 1.3rem; line-height: 1.8; direction: rtl;">
+                    </p>
+                </div>
+            </div>
+
+            <div id="beautySurpriseContainer"
+                style="display:none; margin-top:40px; text-align:center; position: relative;">
+                <h2 class="game-title" style="color: #d4af37; font-size: 1.8rem; margin-bottom: 30px;">حابة تشوفي حاجه
+                    حلوة؟ ✨</h2>
+
+                <div id="noButtonsWrapper"
+                    style="display: flex; justify-content: center; align-items: center; min-height: 400px; position: relative; width: 100%; overflow: visible;">
+                    <button class="surprise-btn escape-btn" id="noBtn"
+                        style="min-width: 100px; padding: 15px 30px; z-index: 1000; position: absolute; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">لا</button>
+                </div>
+
+                <div id="yesButtonContainer" style="display:none; margin-top: 40px;">
+                    <button class="surprise-btn" id="yesBtn"
+                        style="background: linear-gradient(135deg, #40e0d0, #ff69b4); color: white; padding: 20px 60px; font-size: 1.5rem;">ايوة</button>
+                    <p class="message-text"
+                        style="font-size: 1rem; color: #ff69b4; margin-top: 15px; font-weight: 700;">معلش اتلغبط وعملت
+                        الزرار غلط 😅</p>
+                </div>
+            </div>
+
+            <div id="heartAnimationContainer"
+                style="display:none; width: 100%; height: 80vh; position: relative; margin-top: 20px; border-radius: 20px; overflow: hidden; background: #180097;">
+                <canvas id="heartCanvas" style="width: 100%; height: 100%; cursor: crosshair;"></canvas>
+            </div>
+        </div>
+
+        <!-- Day 6 Section -->
+        <div id="day6Section" class="game-container" style="display:none; max-width: 900px; margin: 0 auto;">
+            <p id="day6Text" class="message-text"
+                style="font-size: 1.4rem; line-height: 1.8; margin-bottom: 30px; min-height: 100px; color: #fff;"></p>
+
+            <!-- Photo Album -->
+            <div id="photoAlbumContainer" style="display:none; margin-top: 30px;">
+                <div class="album-wrapper"
+                    style="position: relative; width: 100%; height: 500px; background: rgba(0,0,0,0.3); border-radius: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <img id="albumPhoto" src=""
+                        style="max-width: 90%; max-height: 90%; object-fit: contain; border: 5px solid white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: opacity 0.5s ease;">
+                    <button id="prevPhoto" class="surprise-btn"
+                        style="position: absolute; left: 10px; padding: 10px 20px; font-size: 1.2rem;">←</button>
+                    <button id="nextPhoto" class="surprise-btn"
+                        style="position: absolute; right: 10px; padding: 10px 20px; font-size: 1.2rem;">→</button>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button id="showHeartBtn" class="surprise-btn"
+                        style="background: linear-gradient(135deg, #ff69b4, #ff1493); color: white; padding: 15px 40px; font-size: 1.3rem; display: none;">خلاص
+                        وريني اللي بعد كدا ✨</button>
+                </div>
+            </div>
+
+            <!-- Particle Heart Container (Pinkboard) -->
+            <div id="particleHeartContainer"
+                style="display:none; width: 100%; height: 600px; position: relative; background: #000; border-radius: 15px; margin-top: 20px; overflow: hidden;">
+                <canvas id="pinkboard" style="width: 100%; height: 100%;"></canvas>
+                <div id="text-overlay"
+                    style="position: absolute; color: #ff69b4; font-size: clamp(40px, 8vw, 80px); font-weight: bold; text-shadow: 0 0 10px #ff69b4, 0 0 5px #ff1493; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; white-space: nowrap;">
+                    noran</div>
+            </div>
         </div>
 
         <div class="pubg-section">
@@ -1212,7 +1384,6 @@
                 </p>
             </div>
         </div>
-    </div>
     </div>
 
     <script>
@@ -2246,10 +2417,390 @@
             osc2.stop(startTime + duration);
             osc3.stop(startTime + duration);
         }
+
+        // ==================== DAY 5 LOGIC ====================
+        let escapeCount = 0;
+        let isMoving = false;
+        let heartCtx, heartW, heartH, heartRopes, heartTurn, heartAnimId;
+        let heartMouse = { x: null, y: null };
+        let heartActive = false;
+
+        const heartUtils = {
+            drawC(x, y, r, c) {
+                heartCtx.beginPath();
+                heartCtx.fillStyle = c;
+                heartCtx.arc(x, y, r, 0, 2 * Math.PI);
+                heartCtx.fill();
+                heartCtx.closePath();
+            },
+            pick(max = 1, min = 0) {
+                return Math.random() * (max - min) + min;
+            },
+            writeT(text, x, y) {
+                heartCtx.beginPath();
+                heartCtx.font = '14px Cairo';
+                heartCtx.fillStyle = "white";
+                heartCtx.textAlign = "center";
+                heartCtx.textBaseline = "middle";
+                heartCtx.fillText(text, x, y);
+                heartCtx.fill();
+                heartCtx.closePath();
+            }
+        };
+
+        class HeartRope {
+            constructor(x, y, r, c, z) {
+                this.ref = { x: x, y: y };
+                this.si = Math.min(0.05 * this.ref.x, 0.05 * (heartW - this.ref.x), 0.05 * this.ref.y, 0.05 * (heartH - this.ref.y));
+                this.z = z;
+                this.r = r;
+                this.c = c;
+                this.n = [];
+                this.n.push(new HeartNode(this.ref.x, this.ref.y, this.r, this.c));
+                this.createCords();
+            }
+            createCords() {
+                for (let i = 0; i < 20; i++) {
+                    let a = this.n[0].x + 5 * (i + 1);
+                    let b = this.n[0].y + 5 * (i + 1);
+                    this.n.push(new HeartNode(a, b, heartUtils.pick(), this.c));
+                }
+            }
+            update(idx) {
+                for (let j = 0; j < this.n.length; j++) {
+                    if (!j) {
+                        if (heartMouse.x && (idx != heartTurn)) continue;
+                        this.z += 0.01;
+                        let tx = Math.sin(this.z);
+                        this.n[j].x = heartMouse.x || this.ref.x + (this.si * (16 * tx * tx * tx));
+                        tx = this.z;
+                        this.n[j].y = heartMouse.y || this.ref.y - (this.si * (13 * Math.cos(tx) - 5 * Math.cos(2 * tx) - 2 * Math.cos(3 * tx) - Math.cos(4 * tx)));
+
+                        if (heartMouse.x) {
+                            this.ref.x = heartMouse.x;
+                            this.ref.y = heartMouse.y;
+                            this.z %= 6.3132;
+                            heartTurn++;
+                            heartTurn %= (heartRopes.length);
+                            heartMouse.x = null;
+                            heartMouse.y = null;
+                            this.si = Math.min(0.05 * this.ref.x, 0.05 * (heartW - this.ref.x), 0.05 * this.ref.y, 0.05 * (heartH - this.ref.y));
+                            heartCtx.fillStyle = "rgba(24,0,151,0.95)";
+                            heartCtx.fillRect(0, 0, heartW, heartH);
+                        }
+                    } else {
+                        this.n[j].x += (this.n[j - 1].x - this.n[j].x) / (j + 1);
+                        this.n[j].y += (this.n[j - 1].y - this.n[j].y) / (j + 1);
+                    }
+                    this.n[j].draw();
+                }
+            }
+        }
+
+        class HeartNode {
+            constructor(x, y, r, c) {
+                this.x = x; this.y = y; this.r = r; this.c = c;
+            }
+            draw() {
+                heartUtils.drawC(this.x, this.y, this.r, this.c);
+            }
+        }
+
+        async function showDay5Surprise() {
+            surpriseSection.style.display = 'none';
+            const day5Sect = document.getElementById('day5Section');
+            day5Sect.style.display = 'block';
+
+            const audio5 = document.getElementById('songAudio5');
+            if (audio5) {
+                audio5.currentTime = 0;
+                audio5.play().catch(e => console.log("Audio 5 play error", e));
+            }
+
+            const textEl = document.getElementById('day5Text');
+            const message = "اهلا طبعا متأخرين يوم بس معلش سماح المره دي المهم انا كنت ناوي اعترفلك هنا امبارح بس حصل اللي حصل امبارح بقي عايز اقولك اني بجد حبيتك معرفش ازاي بالسرعه دي معرفش ازاي دماغنا زي بعض كدا ازاي انتي مريحه كدا كل دي اسألأه مش فارقلي اعرف اجابتها اهم حاجه انك موجوده وجميلة اظن بقي انا لما ابنك يقولك يامامي هي 2025 كانت عامله ازاي الموضوع هيختلف دلوقتي لاني هبقي جنبك ساعتها واقوله انها السنه الافضل علي الاطلاق لاني قابلت امك المزه دي فيها";
+            textEl.innerHTML = '';
+            await typeMessage(message, textEl, 50);
+
+            setTimeout(() => {
+                document.getElementById('beautySurpriseContainer').style.display = 'block';
+                initBeautySurprise();
+                document.getElementById('beautySurpriseContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        }
+
+        function initBeautySurprise() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const wrapper = document.getElementById('noButtonsWrapper');
+            escapeCount = 0;
+            isMoving = false;
+            noBtn.style.display = 'inline-block';
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = '50%';
+            noBtn.style.top = '50%';
+            noBtn.style.transform = 'translate(-50%, -50%)';
+            document.getElementById('yesButtonContainer').style.display = 'none';
+            document.getElementById('heartAnimationContainer').style.display = 'none';
+            wrapper.style.display = 'flex';
+            document.querySelector('#beautySurpriseContainer h2').style.display = 'block';
+
+            const runAway = () => {
+                if (isMoving) return;
+                isMoving = true;
+                if (escapeCount >= 4) {
+                    noBtn.style.display = 'none';
+                    document.getElementById('yesButtonContainer').style.display = 'block';
+                    isMoving = false;
+                    return;
+                }
+                const positions = [
+                    { left: '10%', top: '10%', tr: '0,0' },
+                    { left: '80%', top: '10%', tr: '-100%,0' },
+                    { left: '10%', top: '80%', tr: '0,-100%' },
+                    { left: '80%', top: '80%', tr: '-100%,-100%' }
+                ];
+                const pos = positions[escapeCount];
+                noBtn.style.left = pos.left;
+                noBtn.style.top = pos.top;
+                noBtn.style.transform = `translate(${pos.tr})`;
+                escapeCount++;
+                setTimeout(() => { isMoving = false; }, 500);
+            };
+
+            noBtn.onmouseover = runAway;
+            noBtn.onclick = (e) => { e.preventDefault(); runAway(); };
+            noBtn.ontouchstart = (e) => { e.preventDefault(); runAway(); };
+
+            yesBtn.onclick = () => {
+                document.getElementById('yesButtonContainer').style.display = 'none';
+                wrapper.style.display = 'none';
+                document.querySelector('#beautySurpriseContainer h2').style.display = 'none';
+                document.getElementById('heartAnimationContainer').style.display = 'block';
+                initHeartAnimation();
+            };
+        }
+
+        function initHeartAnimation() {
+            const cvs = document.getElementById('heartCanvas');
+            heartCtx = cvs.getContext('2d');
+            heartW = cvs.width = cvs.parentElement.offsetWidth;
+            heartH = cvs.height = cvs.parentElement.offsetHeight;
+            heartTurn = 0;
+            heartRopes = [];
+            heartRopes.push(new HeartRope(heartW * 0.5, heartH * 0.35, 1, "hotpink", 0.2));
+            heartRopes.push(new HeartRope(heartW * 0.5, heartH * 0.35, 2, "cyan", 3.341));
+
+            // Events
+            const handleMouse = (e) => {
+                const rect = cvs.getBoundingClientRect();
+                heartMouse.x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+                heartMouse.y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+            };
+            cvs.onmousedown = (e) => { handleMouse(e); heartActive = true; };
+            cvs.onmousemove = (e) => { if (heartActive) handleMouse(e); };
+            cvs.onmouseup = () => { heartActive = false; heartMouse.x = null; heartMouse.y = null; };
+            cvs.ontouchstart = (e) => { handleMouse(e); heartActive = true; };
+            cvs.ontouchmove = (e) => { handleMouse(e); e.preventDefault(); };
+            cvs.ontouchend = () => { heartActive = false; heartMouse.x = null; heartMouse.y = null; };
+
+            if (heartAnimId) cancelAnimationFrame(heartAnimId);
+            animateHeart();
+        }
+
+        function animateHeart() {
+            heartCtx.fillStyle = "rgba(24,0,151,0.02)";
+            heartCtx.fillRect(0, 0, heartW, heartH);
+            heartRopes.forEach((r, idx) => r.update(idx));
+            heartUtils.writeT("ireally love u bab", heartW * 0.5, heartH * 0.88);
+            heartAnimId = requestAnimationFrame(animateHeart);
+        }
+
+        document.getElementById('day5Btn').addEventListener('click', showDay5Surprise);
+
+        // ==================== DAY 6 LOGIC ====================
+        let albumIndex = 0;
+        const albumPhotos = ['a.jpeg', 'b.jpeg', 'c.jpeg', 'd.jpeg', 'e.jpeg', 'f.jpeg', 'g.jpeg', 'h.jpeg'];
+
+        async function showDay6Surprise() {
+            surpriseSection.style.display = 'none';
+            document.getElementById('day6Section').style.display = 'block';
+
+            // Play Audio 6
+            const audio6 = document.getElementById('songAudio6');
+            if (audio6) {
+                audio6.currentTime = 0;
+                audio6.play().catch(e => console.log("Audio 6 play error", e));
+            }
+
+            const textEl = document.getElementById('day6Text');
+            const message = "انهاردة نمتي كتير ووحشتيني كتير قعدت افكرلك اعملك اي اعملك اي وانتي امبارح قولتيلي انك بتحبي الحاجات اللي بعملها زي اللي وريتهولك امبارح بس الاول عايز اوريكي شوية صور لينا";
+            await typeMessage(message, textEl, 50);
+
+            setTimeout(() => {
+                initPhotoAlbum();
+                document.getElementById('photoAlbumContainer').style.display = 'block';
+                document.getElementById('photoAlbumContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        }
+
+        function initPhotoAlbum() {
+            const img = document.getElementById('albumPhoto');
+            const nextBtn = document.getElementById('nextPhoto');
+            const prevBtn = document.getElementById('prevPhoto');
+            const heartBtn = document.getElementById('showHeartBtn');
+
+            const updatePhoto = () => {
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    img.src = albumPhotos[albumIndex];
+                    img.style.opacity = '1';
+
+                    // Show heart button after seeing all photos
+                    if (albumIndex === albumPhotos.length - 1) {
+                        heartBtn.style.display = 'inline-block';
+                    }
+                }, 300);
+            };
+
+            albumIndex = 0;
+            updatePhoto();
+
+            nextBtn.onclick = () => {
+                albumIndex = (albumIndex + 1) % albumPhotos.length;
+                updatePhoto();
+            };
+
+            prevBtn.onclick = () => {
+                albumIndex = (albumIndex - 1 + albumPhotos.length) % albumPhotos.length;
+                updatePhoto();
+            };
+
+            heartBtn.onclick = () => {
+                document.getElementById('photoAlbumContainer').style.display = 'none';
+                document.getElementById('particleHeartContainer').style.display = 'block';
+                initParticleHeart();
+                document.getElementById('particleHeartContainer').scrollIntoView({ behavior: 'smooth' });
+            };
+        }
+
+        function initParticleHeart() {
+            var settings = {
+                particles: { length: 500, duration: 2, velocity: 100, effect: -0.75, size: 30 },
+            };
+
+            var Point = (function () {
+                function Point(x, y) { this.x = x || 0; this.y = y || 0; }
+                Point.prototype.clone = function () { return new Point(this.x, this.y); };
+                Point.prototype.length = function (len) {
+                    if (typeof len == 'undefined') return Math.sqrt(this.x * this.x + this.y * this.y);
+                    this.normalize(); this.x *= len; this.y *= len; return this;
+                };
+                Point.prototype.normalize = function () { var len = this.length(); this.x /= len; this.y /= len; return this; };
+                return Point;
+            })();
+
+            var Particle = (function () {
+                function Particle() { this.position = new Point(); this.velocity = new Point(); this.acceleration = new Point(); this.age = 0; }
+                Particle.prototype.initialize = function (x, y, dx, dy) {
+                    this.position.x = x; this.position.y = y; this.velocity.x = dx; this.velocity.y = dy;
+                    this.acceleration.x = dx * settings.particles.effect; this.acceleration.y = dy * settings.particles.effect; this.age = 0;
+                };
+                Particle.prototype.update = function (dt) {
+                    this.position.x += this.velocity.x * dt; this.position.y += this.velocity.y * dt;
+                    this.velocity.x += this.acceleration.x * dt; this.velocity.y += this.acceleration.y * dt; this.age += dt;
+                };
+                Particle.prototype.draw = function (ctx, img) {
+                    function ease(t) { return (--t) * t * t + 1; }
+                    var sz = img.width * ease(this.age / settings.particles.duration);
+                    ctx.globalAlpha = 1 - this.age / settings.particles.duration;
+                    ctx.drawImage(img, this.position.x - sz / 2, this.position.y - sz / 2, sz, sz);
+                };
+                return Particle;
+            })();
+
+            var ParticlePool = (function () {
+                var particles, firstActive = 0, firstFree = 0, duration = settings.particles.duration;
+                function ParticlePool(len) { particles = new Array(len); for (var i = 0; i < len; i++) particles[i] = new Particle(); }
+                ParticlePool.prototype.add = function (x, y, dx, dy) {
+                    particles[firstFree].initialize(x, y, dx, dy);
+                    firstFree++; if (firstFree == particles.length) firstFree = 0;
+                    if (firstActive == firstFree) { firstActive++; if (firstActive == particles.length) firstActive = 0; }
+                };
+                ParticlePool.prototype.update = function (dt) {
+                    var i;
+                    if (firstActive < firstFree) { for (i = firstActive; i < firstFree; i++) particles[i].update(dt); }
+                    if (firstFree < firstActive) {
+                        for (i = firstActive; i < particles.length; i++) particles[i].update(dt);
+                        for (i = 0; i < firstFree; i++) particles[i].update(dt);
+                    }
+                    while (particles[firstActive].age >= duration && firstActive != firstFree) {
+                        firstActive++; if (firstActive == particles.length) firstActive = 0;
+                    }
+                };
+                ParticlePool.prototype.draw = function (ctx, img) {
+                    var i;
+                    if (firstActive < firstFree) { for (i = firstActive; i < firstFree; i++) particles[i].draw(ctx, img); }
+                    if (firstFree < firstActive) {
+                        for (i = firstActive; i < particles.length; i++) particles[i].draw(ctx, img);
+                        for (i = 0; i < firstFree; i++) particles[i].draw(ctx, img);
+                    }
+                };
+                return ParticlePool;
+            })();
+
+            (function (canvas) {
+                var context = canvas.getContext('2d'), particles = new ParticlePool(settings.particles.length),
+                    particleRate = settings.particles.length / settings.particles.duration, time;
+
+                function pointOnHeart(t) {
+                    return new Point(160 * Math.pow(Math.sin(t), 3), 130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25);
+                }
+
+                var image = (function () {
+                    var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+                    canvas.width = settings.particles.size; canvas.height = settings.particles.size;
+                    function to(t) {
+                        var p = pointOnHeart(t);
+                        p.x = settings.particles.size / 2 + p.x * settings.particles.size / 350;
+                        p.y = settings.particles.size / 2 - p.y * settings.particles.size / 350;
+                        return p;
+                    }
+                    ctx.beginPath(); var t = -Math.PI; var p = to(t); ctx.moveTo(p.x, p.y);
+                    while (t < Math.PI) { t += 0.01; p = to(t); ctx.lineTo(p.x, p.y); }
+                    ctx.closePath(); ctx.fillStyle = '#ea80b0'; ctx.fill();
+                    var img = new Image(); img.src = canvas.toDataURL(); return img;
+                })();
+
+                function render() {
+                    requestAnimationFrame(render);
+                    var newTime = new Date().getTime() / 1000, dt = newTime - (time || newTime);
+                    time = newTime;
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    var amount = particleRate * dt;
+                    for (var i = 0; i < amount; i++) {
+                        var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                        var dir = pos.clone().length(settings.particles.velocity);
+                        particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+                    }
+                    particles.update(dt);
+                    particles.draw(context, image);
+                }
+
+                function onResize() { canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; }
+                window.onresize = onResize;
+                setTimeout(function () { onResize(); render(); }, 10);
+            })(document.getElementById('pinkboard'));
+        }
+
+        document.getElementById('day5Btn').addEventListener('click', showDay5Surprise);
+        document.getElementById('day6Btn').addEventListener('click', showDay6Surprise);
     </script>
     <audio id="songAudio" src="11.mp3" preload="auto"></audio>
     <audio id="songAudio12" src="12.mp3" preload="auto"></audio>
     <audio id="songAudio4" src="4.mp3" preload="auto"></audio>
+    <audio id="songAudio5" src="5.mp3" preload="auto"></audio>
+    <audio id="songAudio6" src="6.mp3" preload="auto"></audio>
 </body>
 
 </html>
